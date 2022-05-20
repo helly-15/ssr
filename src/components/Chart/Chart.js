@@ -9,7 +9,7 @@ import {
     Legend,
 } from 'chart.js';
 import './Chart.css';
-import { Bar } from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 import axios from "axios";
 
 ChartJS.register(
@@ -38,14 +38,14 @@ const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 const years = ['2020', '2021', '2022']
 
 
-export function Chart() {
-    const [data, setData] = useState( {
+export default function Chart() {
+    const [data, setData] = useState({
         "2020": {
-            "income": [0,0,0,0,0,0,0],
-            "profit": [0,0,0,0,0,0,0],
+            "income": [0, 0, 0, 0, 0, 0, 0],
+            "profit": [0, 0, 0, 0, 0, 0, 0],
         }
     });
-    const [year, setYear] = useState( '2020');
+    const [year, setYear] = useState('2020');
 
     const dataForChart = {
         labels,
@@ -63,18 +63,19 @@ export function Chart() {
         ],
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         async function fetchData() {
             const result = await axios(
                 `https://my-json-server.typicode.com/helly-15/ssr-db/${year}`,
             );
             setData(result.data);
         }
+
         fetchData()
-    },[year]);
+    }, [year]);
 
     return <div className={'chart-wrapper'}>
-        <Bar options={options} data={dataForChart} />
-        {years.map((year)=> <button onClick={()=>setYear(year)}>{year}</button>)}
+        <Bar options={options} data={dataForChart}/>
+        {years.map((year) => <button onClick={() => setYear(year)}>{year}</button>)}
     </div>;
 }
