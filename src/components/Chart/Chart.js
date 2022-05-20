@@ -11,6 +11,7 @@ import {
 import './Chart.css';
 import {Bar} from 'react-chartjs-2';
 import axios from "axios";
+import {Link, useParams} from "react-router-dom";
 
 ChartJS.register(
     CategoryScale,
@@ -34,18 +35,20 @@ export const options = {
     },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль'];
 const years = ['2020', '2021', '2022']
 
 
 export default function Chart() {
+    const params = useParams();
+    console.log(params)
     const [data, setData] = useState({
         "2020": {
             "income": [0, 0, 0, 0, 0, 0, 0],
             "profit": [0, 0, 0, 0, 0, 0, 0],
         }
     });
-    const [year, setYear] = useState('2020');
+    const [year, setYear] = useState(params.yearId);
 
     const dataForChart = {
         labels,
@@ -76,6 +79,14 @@ export default function Chart() {
 
     return <div className={'chart-wrapper'}>
         <Bar options={options} data={dataForChart}/>
-        {years.map((year) => <button onClick={() => setYear(year)}>{year}</button>)}
+        {years.map((year) =>
+            <Link
+                className='chart-wrapper__year'
+                to={`/year/${year}`}
+                key={year}
+                exact={'true'}
+                onClick={() => setYear(year)}
+            >{year}</Link>
+        )}
     </div>;
 }
