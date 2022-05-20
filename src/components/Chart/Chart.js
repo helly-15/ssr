@@ -41,7 +41,6 @@ const years = ['2020', '2021', '2022']
 
 export default function Chart() {
     const params = useParams();
-    console.log(params)
     const [data, setData] = useState({
         "2020": {
             "income": [0, 0, 0, 0, 0, 0, 0],
@@ -82,7 +81,7 @@ export default function Chart() {
         {years.map((year) =>
             <Link
                 className='chart-wrapper__year'
-                to={`/year/${year}`}
+                to={`/${year}`}
                 key={year}
                 exact={'true'}
                 onClick={() => setYear(year)}

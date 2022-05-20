@@ -4,7 +4,7 @@ import fs from 'fs';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import express from 'express';
-
+//import {StaticRouter} from "react-router-dom";
 import App from '../src/App';
 
 // create express application
@@ -19,7 +19,11 @@ app.use( '*', ( req, res ) => {
     } );
 
 // получаем HTML строку из компонента 'App'
-    let appHTML = ReactDOMServer.renderToString( <App />);
+    let appHTML = ReactDOMServer.renderToString(
+        // <StaticRouter location={ req.originalUrl }>
+            <App />
+        //</StaticRouter>
+    );
 
 // заполняем элемент '#app' содержимым из 'appHTML'
     indexHTML = indexHTML.replace( '<div id="root"></div>', `<div id="root">${ appHTML }</div>` );
